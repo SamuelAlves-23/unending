@@ -14,6 +14,10 @@ config/name="Unending"
 config/features=PackedStringArray("4.4", "Forward Plus")
 config/icon="res://icon.svg"
 
+[autoload]
+
+ProgressManager="*res://globals/progress_manager/progress_manager.tscn"
+
 [input]
 
 cancel_target={

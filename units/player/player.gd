@@ -33,6 +33,7 @@ enum STATES{
 
 
 func _ready() -> void:
+	ProgressManager.player_ref = self
 	update_stats()
 
 func _process(delta: float) -> void:
@@ -44,7 +45,7 @@ func _process(delta: float) -> void:
 
 func update_stats() -> void:
 	attack = ceil(current_hp * 1.2)
-	defense = ceil((current_icor * 1.2) / 10)
+	defense = ceil(current_icor * 0.2)
 
 func alive():
 	pass
@@ -56,3 +57,7 @@ func take_damage(damage) -> void:
 	var total_damage = ceil(damage - defense)
 	current_hp -= (damage - defense)
 	print(str(current_hp) + "/" + str(max_hp) + " HP")
+
+func drain_icor(amount) -> void:
+	current_icor += amount
+	print(str(current_icor) + "/" + str(max_icor) + " ICOR")

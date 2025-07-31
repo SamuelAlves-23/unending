@@ -13,13 +13,16 @@ extends Node
 @onready var current_level: int = 0
 
 @export var total_icor: int = 20000
-@export var current_icor: int = 20000
+@export var current_icor: int = 20000:
+	set(value):
+		current_icor = value
+		print("ICOR:" + str(current_icor) + "/" + str(total_icor))
+		change_icor()
+
+@onready var player_ref: Player
 
 
-
-
-func break_icor(amount) -> void:
-	current_icor -= amount
+func change_icor() -> void:
 	var keys := ruin_level.keys()
 	keys.sort()
 	keys.reverse()

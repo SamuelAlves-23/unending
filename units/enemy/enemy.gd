@@ -5,6 +5,7 @@ signal targeted(unit)
 signal hp_changed(new_value)
 signal died(unit)
 
+@onready var icor_essence: PackedScene = preload("res://units/icor_essence/icor_essence.tscn")
 
 @export var max_hp: int = 100
 @export var current_hp: int = 100:
@@ -13,7 +14,7 @@ signal died(unit)
 		if current_hp > max_hp:
 			current_hp = max_hp
 		if current_hp <= 0:
-			died.emit(self)
+			die()
 		hp_changed.emit(current_hp)
 
 @export var icor_value: int = 100
@@ -23,6 +24,12 @@ signal died(unit)
 func action() -> void:
 	print("ACCIONES ENEMIGA")
 
+func die() -> void:
+	var icor = icor_essence.instantiate()
+	icor.icor_amount = icor_value
+	icor.global_position = global_position
+	get_parent().add_child(icor)
+	died.emit(self)
 
 func take_damage(damage) -> void:
 	var total_damage = ceil(damage - defense)
