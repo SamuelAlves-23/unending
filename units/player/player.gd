@@ -1,2 +1,53 @@
 extends Node2D
 class_name Player
+
+signal hp_changed(new_value)
+signal icor_changed(new_value)
+signal died()
+enum STATES{
+	ALIVE,
+	DEAD
+}
+@onready var current_state: STATES = STATES.ALIVE
+
+@onready var max_hp: int = 9999
+@onready var current_hp: int = 750:
+	set(value):
+		current_hp = value
+		if current_hp > max_hp:
+			current_hp = max_hp
+		hp_changed.emit(current_hp)
+		update_stats()
+
+@onready var max_icor: int = 9999
+@onready var current_icor: int = 0:
+	set(value):
+		current_icor = value
+		if current_icor > max_icor:
+			current_icor = max_icor
+		icor_changed.emit(current_icor)
+		update_stats()
+
+@onready var attack: int = 0
+@onready var defense: int = 0
+
+
+func _ready() -> void:
+	update_stats()
+
+func _process(delta: float) -> void:
+	match current_state:
+		STATES.ALIVE:
+			alive()
+		STATES.DEAD:
+			dead()
+
+func update_stats() -> void:
+	attack = ceil(current_hp * 1.2)
+	defense = ceil((current_icor * 1.2) / 10)
+
+func alive():
+	pass
+
+func dead():
+	died.emit()

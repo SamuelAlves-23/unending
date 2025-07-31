@@ -8,12 +8,17 @@ enum STATES{
 
 @onready var current_state: STATES = STATES.PLAYER_TURN
 @onready var attack_targeting: bool = false
-@onready var enemies: Array = [Enemy]
+@onready var enemies: Array = []
+@onready var player: Player
 
 @onready var battle_ui: Control = $CanvasLayer/BattleUI
 
 func _ready() -> void:
+	player = $Player
 	enemies.append($Enemy)
+	for enemy in enemies:
+		enemy.connect("targeted", enemy_targeted)
+	
 	battle_ui.connect("attack_pressed", enable_attack)
 
 func _process(delta: float) -> void:
@@ -41,3 +46,8 @@ func quick_break() -> void:
 
 func enable_attack() -> void:
 	attack_targeting = true
+
+func enemy_targeted(enemy) -> void:
+	if attack_targeting:
+		print("OBJETIVO FIJADO" + str(enemy))
+	print("NO SE PUEDE FIJAR")

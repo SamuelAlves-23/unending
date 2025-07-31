@@ -1,14 +1,20 @@
-[gd_scene load_steps=4 format=3 uid="uid://fj6ah78uieao"]
+[gd_scene load_steps=5 format=3 uid="uid://fj6ah78uieao"]
 
 [ext_resource type="Script" uid="uid://gxjo6lu4b0wp" path="res://scenes/battle_scene/battle_scene.gd" id="1_oofy8"]
 [ext_resource type="PackedScene" uid="uid://bqcht6rlnrrfq" path="res://ui/battle_ui/battle_ui.tscn" id="2_v2pga"]
 [ext_resource type="PackedScene" uid="uid://bd71xc2hwhcwt" path="res://units/enemy/enemy.tscn" id="3_joy3q"]
+[ext_resource type="PackedScene" uid="uid://ckm82ah3b13um" path="res://units/player/player.tscn" id="4_t2c54"]
 
 [node name="BattleScene" type="Node2D"]
 script = ExtResource("1_oofy8")
 
+[node name="Enemy" parent="." instance=ExtResource("3_joy3q")]
+position = Vector2(775, 291)
+
+[node name="Player" parent="." instance=ExtResource("4_t2c54")]
+position = Vector2(396, 296)
+
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
 [node name="BattleUI" parent="CanvasLayer" instance=ExtResource("2_v2pga")]
-
-[node name="Enemy" parent="." instance=ExtResource("3_joy3q")]
+offset_top = 488.0
