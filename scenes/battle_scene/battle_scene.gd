@@ -10,7 +10,7 @@ enum STATES{
 @onready var attack_targeting: bool = false
 @onready var enemies: Array = []
 @onready var player: Player
-
+@onready var target: Enemy
 @onready var battle_ui: Control = $CanvasLayer/BattleUI
 
 func _ready() -> void:
@@ -30,11 +30,13 @@ func _process(delta: float) -> void:
 		STATES.QUICK_BREAK:
 			quick_break()
 
+func change_state(new_state: STATES) -> void:
+	current_state = new_state
+
 func player_turn() -> void:
 	
 	if attack_targeting:
 		print("ESCOGIENDO OBJETIVO DE ATAQUE")
-		
 		if Input.is_action_just_pressed("cancel_target"):
 			attack_targeting = false
 
@@ -50,4 +52,8 @@ func enable_attack() -> void:
 func enemy_targeted(enemy) -> void:
 	if attack_targeting:
 		print("OBJETIVO FIJADO" + str(enemy))
+		target = enemy
 	print("NO SE PUEDE FIJAR")
+
+func player_attack() -> void:
+	enemies[target]
