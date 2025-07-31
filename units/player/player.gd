@@ -51,3 +51,8 @@ func alive():
 
 func dead():
 	died.emit()
+
+func take_damage(damage) -> void:
+	var total_damage = ceil(damage - defense)
+	current_hp -= (damage - defense)
+	print(str(current_hp) + "/" + str(max_hp) + " HP")

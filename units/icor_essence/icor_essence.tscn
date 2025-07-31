@@ -1,0 +1,18 @@
+[gd_scene load_steps=3 format=3 uid="uid://ccydfuxqwq6jx"]
+
+[ext_resource type="Script" uid="uid://b5dubeeh36dbe" path="res://units/icor_essence/icor_essence.gd" id="1_wfk4p"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_65xo2"]
+radius = 14.0
+
+[node name="IcorEssence" type="Node2D"]
+script = ExtResource("1_wfk4p")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+
+[node name="Area2D" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource("CircleShape2D_65xo2")
+
+[connection signal="input_event" from="Area2D" to="." method="_on_area_2d_input_event"]

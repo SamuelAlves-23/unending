@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://bbnx1rwxaj7x8"]
+
+[ext_resource type="Script" uid="uid://cxky76aqqnf0r" path="res://globals/progress_manager/progress_manager.gd" id="1_nevt6"]
+
+[node name="ProgressManager" type="Node"]
+script = ExtResource("1_nevt6")
