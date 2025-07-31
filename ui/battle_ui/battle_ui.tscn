@@ -24,9 +24,39 @@ grow_vertical = 0
 layout_mode = 2
 text = "ATTACK"
 
-[node name="SkillsButton" type="Button" parent="VBoxContainer"]
+[node name="StrikeButton" type="Button" parent="VBoxContainer"]
+visible = false
 layout_mode = 2
-text = "SKILLS"
+text = "ICOR STRIKE"
+metadata/skill = "strike"
+
+[node name="SlashButton" type="Button" parent="VBoxContainer"]
+visible = false
+layout_mode = 2
+text = "ICOR SLASH"
+metadata/Skill = "slash"
+
+[node name="RegenerationButton" type="Button" parent="VBoxContainer"]
+visible = false
+layout_mode = 2
+text = "REGENERATION"
+metadata/Skill = "regeneration"
+
+[node name="BeyondButton" type="Button" parent="VBoxContainer"]
+visible = false
+layout_mode = 2
+text = "GO BEYOND"
+metadata/Skill = "beyond"
+
+[node name="EndButton" type="Button" parent="VBoxContainer"]
+visible = false
+layout_mode = 2
+text = "ULTIMATE END"
+metadata/Skill = "end"
 
 [connection signal="pressed" from="VBoxContainer/AttackButton" to="." method="_on_attack_button_pressed"]
-[connection signal="pressed" from="VBoxContainer/SkillsButton" to="." method="_on_skills_button_pressed"]
+[connection signal="pressed" from="VBoxContainer/StrikeButton" to="." method="_on_strike_button_pressed"]
+[connection signal="pressed" from="VBoxContainer/SlashButton" to="." method="_on_slash_button_pressed"]
+[connection signal="pressed" from="VBoxContainer/RegenerationButton" to="." method="_on_regeneration_button_pressed"]
+[connection signal="pressed" from="VBoxContainer/BeyondButton" to="." method="_on_beyond_button_pressed"]
+[connection signal="pressed" from="VBoxContainer/EndButton" to="." method="_on_end_button_pressed"]

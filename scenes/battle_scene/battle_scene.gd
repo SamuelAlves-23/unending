@@ -6,6 +6,13 @@ enum STATES{
 	QUICK_BREAK
 }
 
+@onready var skill_costs: Dictionary = {
+	"strike" : 250,
+	"slash" : 1000,
+	"regeneration" : 0,
+	"end" : 9999
+}
+
 @onready var current_state: STATES = STATES.PLAYER_TURN
 @onready var attack_targeting: bool = false
 @onready var enemies = []
@@ -69,3 +76,10 @@ func player_attack() -> void:
 	target = null
 	if enemies.size() > 0:
 		change_state(STATES.ENEMY_TURN)
+
+func check_skill(skill: String) -> void:
+	if skill_costs[skill] <= ProgressManager.player_ref.current_icor:
+		use_skill(skill)
+
+func use_skill(skill: String) -> void:
+	pass

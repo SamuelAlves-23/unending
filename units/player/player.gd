@@ -4,6 +4,9 @@ class_name Player
 signal hp_changed(new_value)
 signal icor_changed(new_value)
 signal died()
+
+
+
 enum STATES{
 	ALIVE,
 	DEAD
