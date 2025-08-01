@@ -2,6 +2,7 @@ extends Node2D
 
 enum STATES{
 	PLAYER_TURN,
+	CHECK,
 	ENEMY_TURN,
 	QUICK_BREAK
 }
@@ -22,10 +23,14 @@ enum STATES{
 @onready var battle_ui: Control = $CanvasLayer/BattleUI
 
 @onready var striking: bool = false
+@onready var first: bool = true
 
 func _ready() -> void:
 	player = $Player
 	enemies.append($Enemy)
+	enemies.append($Enemy2)
+	enemies.append($Enemy3)
+	
 	for enemy in enemies:
 		enemy.connect("targeted", enemy_targeted)
 		enemy.connect("died", erase_enemy)
@@ -35,15 +40,22 @@ func _process(delta: float) -> void:
 	match current_state:
 		STATES.PLAYER_TURN:
 			player_turn()
+		STATES.CHECK:
+			check()
 		STATES.ENEMY_TURN:
 			enemy_turn()
 		STATES.QUICK_BREAK:
 			quick_break()
 
 func change_state(new_state: STATES) -> void:
+	first = true
+	attack_targeting = false
 	current_state = new_state
 
 func player_turn() -> void:
+	if first:
+		first = false
+		check_upgrades()
 	
 	if attack_targeting:
 		print("ESCOGIENDO OBJETIVO DE ATAQUE")
@@ -98,6 +110,9 @@ func check_skill(skill: String) -> void:
 			"end":
 				end()
 
+func check() -> void:
+	check_upgrades()
+	
 
 func strike_target() -> void:
 	if current_state == STATES.PLAYER_TURN:
@@ -110,8 +125,7 @@ func strike() -> void:
 	player.current_icor -= 500
 	target.take_damage(total_damage)
 	target = null
-	if enemies.size() > 0:
-		change_state(STATES.ENEMY_TURN)
+	change_state(STATES.CHECK)
 
 func slash() -> void:
 	print("ICOR SLASH")
@@ -119,18 +133,16 @@ func slash() -> void:
 	player.current_icor -= 1000
 	for enemy in enemies:
 		enemy.take_damage(total_damage)
-	if enemies.size() > 0:
-		change_state(STATES.ENEMY_TURN)
+	change_state(STATES.CHECK)
 
 func regeneration() -> void:
 	var amount = ceil(player.current_icor / 2)
 	player.current_icor -= amount
 	player.current_hp += amount
-	if enemies.size() > 0:
-		change_state(STATES.ENEMY_TURN)
+	change_state(STATES.CHECK)
 
 func beyond() -> void:
-	pass
+	player.beyond()
 
 func end() -> void:
 	print("ULTIMATE END")
@@ -138,5 +150,16 @@ func end() -> void:
 	player.current_icor -= 9999
 	for enemy in enemies:
 		enemy.take_damage(total_damage)
-	if enemies.size() > 0:
-		change_state(STATES.ENEMY_TURN)
+	change_state(STATES.CHECK)
+
+func check_upgrades() -> void:
+	if player.current_icor >= 1000:
+		battle_ui.unlock_skill("strike")
+	if player.current_icor >= 2000:
+		battle_ui.unlock_skill("slash")
+	if player.current_icor >= 4000:
+		battle_ui.unlock_skill("regeneration")
+	if player.current_icor >= 6000:
+		battle_ui.unlock_skill("beyond")
+	if player.current_icor >= 9999 and player.current_hp >= 9999:
+		battle_ui.unlock_skill("end")
