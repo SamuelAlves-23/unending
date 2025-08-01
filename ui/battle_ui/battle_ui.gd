@@ -4,8 +4,18 @@ signal attack_pressed()
 
 signal skill_pressed(skill)
 
-func unlock_skill(skill: Skill) -> void:
-	pass
+func unlock_skill(skill: String) -> void:
+	match skill:
+		"strike":
+			$VBoxContainer/StrikeButton.show()
+		"slash":
+			$VBoxContainer/SlashButton.show()
+		"regeneration":
+			$VBoxContainer/RegenerationButton.show()
+		"beyond":
+			$VBoxContainer/BeyondButton.show()
+		"end":
+			$VBoxContainer/EndButton.show()
 
 func _on_attack_button_pressed() -> void:
 	attack_pressed.emit()

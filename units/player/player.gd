@@ -20,7 +20,8 @@ enum STATES{
 		if current_hp > max_hp:
 			current_hp = max_hp
 		hp_changed.emit(current_hp)
-		update_stats()
+		if !limit_broken:
+			update_stats()
 
 @onready var max_icor: int = 9999
 @onready var current_icor: int = 0:
@@ -29,11 +30,12 @@ enum STATES{
 		if current_icor > max_icor:
 			current_icor = max_icor
 		icor_changed.emit(current_icor)
-		update_stats()
+		if !limit_broken:
+			update_stats()
 
 @onready var attack: int = 0
 @onready var defense: int = 0
-
+@onready var limit_broken: bool = false
 
 func _ready() -> void:
 	ProgressManager.player_ref = self
@@ -64,3 +66,9 @@ func take_damage(damage) -> void:
 func drain_icor(amount) -> void:
 	current_icor += amount
 	print(str(current_icor) + "/" + str(max_icor) + " ICOR")
+
+func beyond() -> void:
+	limit_broken = true
+	current_hp = max_hp
+	attack = 9999
+	defense = 500
