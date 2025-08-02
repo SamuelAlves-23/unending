@@ -90,8 +90,13 @@ func erase_enemy(enemy) -> void:
 	enemies.erase(enemy)
 
 func player_attack() -> void:
+	attack_targeting = false
 	var total_damage = randi_range(player.attack * 0.9, player.attack * 1.1)
+	player.target_jump = target.global_position - Vector2(30,0)
+	await player.animate("jump")
+	await player.animate("attack")
 	target.take_damage(total_damage)
+	await player.animate("return_jump")
 	target = null
 	if enemies.size() > 0:
 		change_state(STATES.ENEMY_TURN)
@@ -122,6 +127,7 @@ func strike_target() -> void:
 func strike() -> void:
 	print("ICOR STRIKE")
 	var total_damage = randi_range(player.attack * 0.9, player.attack * 1.1) * 2
+	player.target_jump = target.global_position - Vector2(5,0)
 	player.current_icor -= 500
 	target.take_damage(total_damage)
 	target = null

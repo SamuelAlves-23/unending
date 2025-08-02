@@ -37,6 +37,17 @@ enum STATES{
 @onready var defense: int = 0
 @onready var limit_broken: bool = false
 
+## ANIMACIONES
+@onready var idle: AnimatedSprite2D = $Idle
+@onready var jump: AnimatedSprite2D = $Jump
+@onready var pray: AnimatedSprite2D = $Pray
+@onready var basic_attack: AnimatedSprite2D = $BasicAttack
+@onready var death: AnimatedSprite2D = $Death
+@onready var hit: AnimatedSprite2D = $Hurt
+
+@onready var target_jump: Vector2
+@onready var player_pos: Vector2 = global_position
+
 func _ready() -> void:
 	ProgressManager.player_ref = self
 	update_stats()
@@ -72,3 +83,43 @@ func beyond() -> void:
 	current_hp = max_hp
 	attack = 9999
 	defense = 500
+
+
+func animate(animation: String) -> void:
+	match animation:
+		"attack":
+			idle.hide()
+			basic_attack.show()
+			basic_attack.play()
+			await basic_attack.animation_finished
+			idle.show()
+			basic_attack.hide()
+		"hit":
+			idle.hide()
+			hit.show()
+			hit.play()
+			await hit.animation_finished
+			idle.show()
+			hit.hide()
+		"Death":
+			idle.hide()
+			death.show()
+			death.play()
+			await death.animation_finished
+		"jump":
+			idle.hide()
+			jump.show()
+			var tween = create_tween()
+			tween.tween_property(self, "global_position", target_jump, 0.7)
+			jump.play()
+			await jump.animation_finished
+			jump.hide()
+		"return_jump":
+			idle.hide()
+			jump.show()
+			var tween = create_tween()
+			tween.tween_property(self, "global_position", player_pos, 0.7)
+			jump.play_backwards()
+			await jump.animation_finished
+			idle.show()
+			jump.hide()

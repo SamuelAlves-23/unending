@@ -9,27 +9,27 @@
 script = ExtResource("1_oofy8")
 
 [node name="Enemy" parent="." instance=ExtResource("3_joy3q")]
-position = Vector2(775, 291)
+position = Vector2(490, 134)
 max_hp = 9999
 icor_value = 750
 attack = 399
 
 [node name="Enemy2" parent="." instance=ExtResource("3_joy3q")]
-position = Vector2(771, 438)
+position = Vector2(489, 226)
 max_hp = 9999
 icor_value = 750
 attack = 399
 
 [node name="Enemy3" parent="." instance=ExtResource("3_joy3q")]
-position = Vector2(770, 156)
+position = Vector2(494, 38)
 max_hp = 9999
 icor_value = 750
 attack = 399
 
 [node name="Player" parent="." instance=ExtResource("4_t2c54")]
-position = Vector2(396, 296)
+position = Vector2(120, 133)
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
 [node name="BattleUI" parent="CanvasLayer" instance=ExtResource("2_v2pga")]
-offset_top = 488.0
+offset_top = 270.0
